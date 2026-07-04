@@ -1,0 +1,8 @@
+{
+  "origin": "SEA",
+  "destinations": ["SMF", "SFO"],
+  "outbound_date": "2026-08-17",
+  "trip_type": "one_way",
+  "currency": "USD",
+  "travelers": 2
+}
