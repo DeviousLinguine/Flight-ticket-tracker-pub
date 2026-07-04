@@ -65,7 +65,10 @@ def fetch_route(api_key: str, cfg: dict, destination: str) -> dict:
         "outbound_date": cfg["outbound_date"],
         # Google Flights type: 1 = round trip, 2 = one way.
         "type": 2 if cfg.get("trip_type") == "one_way" else 1,
-        "adults": cfg.get("travelers", 1),
+        # Always query per-person (adults=1) so the fare, price_level, and
+        # typical_price_range are all on the standard per-passenger basis that
+        # airlines and Google quote. The party total is computed for display.
+        "adults": 1,
         "currency": cfg.get("currency", "USD"),
         "hl": "en",
         "api_key": api_key,
@@ -204,8 +207,9 @@ def build_report(cfg: dict, results: list[dict], now: datetime) -> str:
         f"**{cfg['origin']} → {' / '.join(cfg['destinations'])}** · "
         f"{trip} · {cfg['outbound_date']} · {trav} traveler(s) · prices in {cur}",
         "",
-        "_Price shown is the total returned by Google Flights for the passenger "
-        "count above, per direction._",
+        "_Prices are **per person**, one direction — the fare an airline or "
+        "Google Flights quotes you. The \"for N\" figure is the combined cost "
+        "for your whole party._",
         "",
     ]
 
@@ -218,7 +222,10 @@ def build_report(cfg: dict, results: list[dict], now: datetime) -> str:
             continue
 
         price = r["lowest_price"]
-        lines.append(f"**Cheapest: ${price} {cur}**  ·  {r['analysis']['verdict']}")
+        headline = f"**Cheapest: ${price} {cur}/person**"
+        if trav > 1:
+            headline += f" (${price * trav} for {trav})"
+        lines.append(f"{headline}  ·  {r['analysis']['verdict']}")
         if r.get("itinerary"):
             lines.append(f"> {r['itinerary']}")
         lines.append("")
