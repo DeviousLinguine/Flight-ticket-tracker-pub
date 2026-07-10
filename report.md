@@ -10,8 +10,8 @@ _Prices are **per person**, one direction — the fare an airline or Google Flig
 
 - Google rates this price **typical** for these dates
 - inside Google's usual range ($75–$205)
-- below our tracked median of $100.0
-- History (6 checks): low $79 · median $100.0 · high $121 · today ≈ 50th percentile
+- below our tracked median of $79
+- History (7 checks): low $79 · median $79 · high $121 · today ≈ 57th percentile
 
 ## SEA → SFO
 **Cheapest: $125 USD/person** ($250 for 2)  ·  🟡 AVERAGE — no rush either way
@@ -19,8 +19,8 @@ _Prices are **per person**, one direction — the fare an airline or Google Flig
 
 - Google rates this price **typical** for these dates
 - inside Google's usual range ($75–$145)
-- above our tracked median of $113.5
-- History (6 checks): low $85 · median $113.5 · high $128 · today ≈ 50th percentile
+- below our tracked median of $125
+- History (7 checks): low $85 · median $125 · high $128 · today ≈ 57th percentile
 
 ---
-_Checked 2026-07-10 15:29 UTC. Deal calls blend Google's price insights with this tool's own history._
+_Checked 2026-07-10 19:08 UTC. Deal calls blend Google's price insights with this tool's own history._
