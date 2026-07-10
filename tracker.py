@@ -73,6 +73,11 @@ def fetch_route(api_key: str, cfg: dict, destination: str) -> dict:
         "hl": "en",
         "api_key": api_key,
     }
+    window = cfg.get("departure_window")
+    if window and len(window) == 2:
+        # SerpApi's outbound_times end hour is inclusive of that whole hour,
+        # so a [12, 18) window (12:00–17:59) is expressed as "12,17".
+        params["outbound_times"] = f"{window[0]},{window[1] - 1}"
     url = f"{SERPAPI_ENDPOINT}?{urlencode(params)}"
     with urlopen(url, timeout=60) as resp:
         data = json.loads(resp.read().decode("utf-8"))
@@ -81,26 +86,48 @@ def fetch_route(api_key: str, cfg: dict, destination: str) -> dict:
     return data
 
 
-def parse_offer(data: dict) -> dict:
-    """Extract the cheapest offer and Google's price insights from a response."""
+def departure_hour(flight: dict) -> int | None:
+    """Hour (0–23) of the first segment's departure, or None if unparseable."""
+    segs = flight.get("flights") or []
+    if not segs:
+        return None
+    t = segs[0].get("departure_airport", {}).get("time", "")
+    try:
+        return datetime.strptime(t, "%Y-%m-%d %H:%M").hour
+    except ValueError:
+        return None
+
+
+def parse_offer(data: dict, window: list[int] | None = None) -> dict:
+    """Extract the top offers and Google's price insights from a response.
+
+    `window` is an optional [start_hour, end_hour) departure filter applied on
+    top of the API-side outbound_times filter, in case the API returns flights
+    outside the requested range.
+    """
     flights = (data.get("best_flights") or []) + (data.get("other_flights") or [])
-    prices = [f["price"] for f in flights if isinstance(f.get("price"), (int, float))]
+    priced = [f for f in flights if isinstance(f.get("price"), (int, float))]
+    if window and len(window) == 2:
+        priced = [
+            f
+            for f in priced
+            if (h := departure_hour(f)) is not None and window[0] <= h < window[1]
+        ]
+    priced.sort(key=lambda f: f["price"])
+
+    top_offers = [
+        {"price": f["price"], "itinerary": summarize_itinerary(f)} for f in priced[:3]
+    ]
 
     insights = data.get("price_insights") or {}
-    lowest = min(prices) if prices else insights.get("lowest_price")
-
-    cheapest_flight = None
-    if prices:
-        cheapest_flight = min(
-            (f for f in flights if isinstance(f.get("price"), (int, float))),
-            key=lambda f: f["price"],
-        )
+    lowest = priced[0]["price"] if priced else insights.get("lowest_price")
 
     return {
         "lowest_price": lowest,
         "price_level": insights.get("price_level"),  # low | typical | high
         "typical_price_range": insights.get("typical_price_range"),  # [low, high]
-        "itinerary": summarize_itinerary(cheapest_flight),
+        "itinerary": top_offers[0]["itinerary"] if top_offers else None,
+        "top_offers": top_offers,
     }
 
 
@@ -113,22 +140,33 @@ def summarize_itinerary(flight: dict | None) -> str | None:
     airlines = sorted({s.get("airline") for s in segs if s.get("airline")})
     stops = len(segs) - 1
     stop_txt = "nonstop" if stops == 0 else f"{stops} stop{'s' if stops > 1 else ''}"
-    dep = segs[0].get("departure_airport", {}).get("time", "")
-    arr = segs[-1].get("arrival_airport", {}).get("time", "")
+    # Times come as "YYYY-MM-DD HH:MM"; the date is fixed by config, so show
+    # just the clock time.
+    dep = segs[0].get("departure_airport", {}).get("time", "").split(" ")[-1]
+    arr = segs[-1].get("arrival_airport", {}).get("time", "").split(" ")[-1]
     dur = flight.get("total_duration")
     dur_txt = f", {dur // 60}h{dur % 60:02d}m" if dur else ""
-    return f"{', '.join(airlines)} — {stop_txt}{dur_txt} ({dep} → {arr})"
+    return f"departs {dep} → arrives {arr} · {', '.join(airlines)} — {stop_txt}{dur_txt}"
 
 
 # --------------------------------------------------------------------------- #
 # Deal analysis
 # --------------------------------------------------------------------------- #
-def route_history(history: list[dict], destination: str) -> list[dict]:
-    """Successful observations for a destination, oldest first."""
+def route_history(
+    history: list[dict], destination: str, window: list[int] | None = None
+) -> list[dict]:
+    """Successful observations for a destination, oldest first.
+
+    Only entries logged with the same departure window are comparable — an
+    all-day low and an afternoon-only low are different populations — so the
+    stats reset when the window changes.
+    """
     return [
         e
         for e in history
-        if e["destination"] == destination and e.get("lowest_price") is not None
+        if e["destination"] == destination
+        and e.get("lowest_price") is not None
+        and e.get("departure_window") == window
     ]
 
 
@@ -201,11 +239,17 @@ def build_report(cfg: dict, results: list[dict], now: datetime) -> str:
     trav = cfg.get("travelers", 1)
     trip = "one-way" if cfg.get("trip_type") == "one_way" else "round-trip"
 
+    window = cfg.get("departure_window")
+    window_txt = (
+        f" · departures {window[0]:02d}:00–{window[1] - 1:02d}:59" if window else ""
+    )
+
     lines = [
         f"# ✈️ Flight price update — {now.strftime('%a %b %d, %Y')}",
         "",
         f"**{cfg['origin']} → {' / '.join(cfg['destinations'])}** · "
-        f"{trip} · {cfg['outbound_date']} · {trav} traveler(s) · prices in {cur}",
+        f"{trip} · {cfg['outbound_date']} · {trav} traveler(s) · prices in {cur}"
+        f"{window_txt}",
         "",
         "_Prices are **per person**, one direction — the fare an airline or "
         "Google Flights quotes you. The \"for N\" figure is the combined cost "
@@ -226,8 +270,9 @@ def build_report(cfg: dict, results: list[dict], now: datetime) -> str:
         if trav > 1:
             headline += f" (${price * trav} for {trav})"
         lines.append(f"{headline}  ·  {r['analysis']['verdict']}")
-        if r.get("itinerary"):
-            lines.append(f"> {r['itinerary']}")
+        offers = r.get("top_offers") or []
+        for i, o in enumerate(offers, 1):
+            lines.append(f"> **{i}. ${o['price']}** — {o['itinerary']}")
         lines.append("")
         for s in r["analysis"]["signals"]:
             lines.append(f"- {s}")
@@ -265,9 +310,10 @@ def main() -> int:
     now = datetime.now(timezone.utc)
     stamp = now.isoformat(timespec="seconds")
 
+    window = cfg.get("departure_window")
     results = []
     for dest in cfg["destinations"]:
-        past = route_history(history, dest)
+        past = route_history(history, dest, window)
         entry = {
             "checked_at": stamp,
             "origin": cfg["origin"],
@@ -275,9 +321,10 @@ def main() -> int:
             "outbound_date": cfg["outbound_date"],
             "currency": cfg.get("currency", "USD"),
             "travelers": cfg.get("travelers", 1),
+            "departure_window": window,
         }
         try:
-            offer = parse_offer(fetch_route(api_key, cfg, dest))
+            offer = parse_offer(fetch_route(api_key, cfg, dest), window)
         except Exception as exc:  # noqa: BLE001 - report and keep going
             print(f"WARN: {dest}: {exc}", file=sys.stderr)
             entry.update({"lowest_price": None, "error": str(exc)})
@@ -297,7 +344,7 @@ def main() -> int:
             {
                 "destination": dest,
                 "lowest_price": offer["lowest_price"],
-                "itinerary": offer.get("itinerary"),
+                "top_offers": offer.get("top_offers"),
                 "analysis": analyze(offer, past),
             }
         )

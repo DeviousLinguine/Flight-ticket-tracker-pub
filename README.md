@@ -7,7 +7,8 @@ history this tool collects.
 
 Configured out of the box for:
 
-> **SEA → SMF** and **SEA → SFO**, one-way, **Aug 17 2026**, 2 travelers.
+> **SEA → SMF** and **SEA → SFO**, one-way, **Aug 17 2026**, 2 travelers,
+> afternoon departures only (12:00–17:59).
 
 Every morning a GitHub Action checks both routes, commits the updated price
 history, and posts a report as a comment on a tracking issue.
@@ -49,6 +50,7 @@ Edit [`config.json`](config.json):
   "destinations": ["SMF", "SFO"],
   "outbound_date": "2026-08-17",
   "trip_type": "one_way",
+  "departure_window": [12, 18],
   "currency": "USD",
   "travelers": 2
 }
@@ -56,6 +58,15 @@ Edit [`config.json`](config.json):
 
 Use IATA airport codes. Set `"trip_type": "round_trip"` if you add a return
 date (you'd extend `tracker.py` to pass `return_date` for that).
+
+`departure_window` is `[start_hour, end_hour)` — only flights departing in
+that range count, both in the SerpApi query and when picking the top tickets.
+`[12, 18]` means 12:00–17:59. Remove the key to consider all departure times.
+History stats only compare checks made with the same window, so changing it
+restarts the min/median/max tracking.
+
+Each route's report shows the **top 3 tickets by price**, with departure and
+arrival times.
 
 ## Run it locally
 
