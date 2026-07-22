@@ -1,24 +1,26 @@
-# ✈️ Flight price update — Fri Jul 10, 2026
+# ✈️ Flight price update — Wed Jul 22, 2026
 
 **SEA → SMF / SFO** · one-way · 2026-08-17 · 2 traveler(s) · prices in USD · departures 12:00–17:59
 
 _Prices are **per person**, one direction — the fare an airline or Google Flights quotes you. The "for N" figure is the combined cost for your whole party._
 
 ## SEA → SMF
-**Cheapest: $148 USD/person** ($296 for 2)  ·  🟡 AVERAGE — no rush either way
-> **1. $148** — departs 16:58 → arrives 22:59 · United — 1 stop, 6h01m
-> **2. $155** — departs 17:20 → arrives 23:57 · United — 1 stop, 6h37m
-> **3. $166** — departs 15:25 → arrives 17:20 · Southwest — nonstop, 1h55m
+**Cheapest: $155 USD/person** ($310 for 2)  ·  🔴 PRICEY — likely worth waiting
+> **1. $155** — departs 13:00 → arrives 23:32 · Alaska — 2 stops, 10h32m
+> **2. $181** — departs 12:55 → arrives 17:50 · Southwest — 1 stop, 4h55m
+> **3. $194** — departs 15:25 → arrives 17:20 · Southwest — nonstop, 1h55m
 
-- First check for this route — history starts building today.
+- above our tracked median of $148
+- History (1 checks): low $148 · median $148 · high $148 · today ≈ 100th percentile
 
 ## SEA → SFO
-**Cheapest: $128 USD/person** ($256 for 2)  ·  🟡 AVERAGE — no rush either way
-> **1. $128** — departs 12:19 → arrives 16:40 · Frontier — 1 stop, 28h21m
-> **2. $148** — departs 17:20 → arrives 19:42 · United — nonstop, 2h22m
-> **3. $150** — departs 13:00 → arrives 19:41 · Alaska — 1 stop, 6h41m
+**Cheapest: $127 USD/person** ($254 for 2)  ·  🟢 GOOD DEAL — consider booking
+> **1. $127** — departs 12:19 → arrives 16:40 · Frontier — 1 stop, 28h21m
+> **2. $164** — departs 13:00 → arrives 19:41 · Alaska — 1 stop, 6h41m
+> **3. $164** — departs 16:19 → arrives 23:42 · Alaska — 1 stop, 7h23m
 
-- First check for this route — history starts building today.
+- a new low vs the 1 checks we've logged
+- History (1 checks): low $128 · median $128 · high $128 · today ≈ 0th percentile
 
 ---
-_Checked 2026-07-10 15:41 UTC. Deal calls blend Google's price insights with this tool's own history._
+_Checked 2026-07-22 05:02 UTC. Deal calls blend Google's price insights with this tool's own history._
