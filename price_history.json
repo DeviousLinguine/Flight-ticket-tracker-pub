@@ -316,5 +316,35 @@
     "lowest_price": 133,
     "price_level": null,
     "typical_price_range": null
+  },
+  {
+    "checked_at": "2026-07-25T16:12:30+00:00",
+    "origin": "SEA",
+    "destination": "SMF",
+    "outbound_date": "2026-08-17",
+    "currency": "USD",
+    "travelers": 2,
+    "departure_window": [
+      12,
+      18
+    ],
+    "lowest_price": 79,
+    "price_level": null,
+    "typical_price_range": null
+  },
+  {
+    "checked_at": "2026-07-25T16:12:30+00:00",
+    "origin": "SEA",
+    "destination": "SFO",
+    "outbound_date": "2026-08-17",
+    "currency": "USD",
+    "travelers": 2,
+    "departure_window": [
+      12,
+      18
+    ],
+    "lowest_price": 133,
+    "price_level": null,
+    "typical_price_range": null
   }
 ]
