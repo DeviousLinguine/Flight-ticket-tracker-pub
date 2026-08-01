@@ -1,4 +1,4 @@
-# ✈️ Flight price update — Fri Jul 31, 2026
+# ✈️ Flight price update — Sat Aug 01, 2026
 
 **SEA → SMF / SFO** · one-way · 2026-08-17 · 2 traveler(s) · prices in USD
 
@@ -10,8 +10,8 @@ _Prices are **per person**, one direction — the fare an airline or Google Flig
 
 - Google rates this price **typical** for these dates
 - inside Google's usual range ($70–$205)
-- above our tracked median of $89.0
-- History (28 checks): low $74 · median $89.0 · high $169 · today ≈ 100th percentile
+- above our tracked median of $89
+- History (29 checks): low $74 · median $89 · high $169 · today ≈ 100th percentile
 
 ## SEA → SFO
 **Cheapest: $143 USD/person** ($286 for 2)  ·  🔴 PRICEY — likely worth waiting
@@ -19,8 +19,8 @@ _Prices are **per person**, one direction — the fare an airline or Google Flig
 
 - Google rates this price **typical** for these dates
 - inside Google's usual range ($75–$145)
-- above our tracked median of $126.0
-- History (28 checks): low $84 · median $126.0 · high $143 · today ≈ 100th percentile
+- above our tracked median of $127
+- History (29 checks): low $84 · median $127 · high $143 · today ≈ 100th percentile
 
 ---
-_Checked 2026-07-31 18:55 UTC. Deal calls blend Google's price insights with this tool's own history._
+_Checked 2026-08-01 17:35 UTC. Deal calls blend Google's price insights with this tool's own history._
