@@ -1,4 +1,4 @@
-# ✈️ Flight price update — Sun Aug 16, 2026
+# ✈️ Flight price update — Mon Aug 17, 2026
 
 **SEA → SMF / SFO** · one-way · 2026-08-17 · 2 traveler(s) · prices in USD
 
@@ -6,21 +6,21 @@ _Prices are **per person**, one direction — the fare an airline or Google Flig
 
 ## SEA → SMF
 **Cheapest: $302 USD/person** ($604 for 2)  ·  🔴 PRICEY — likely worth waiting
-> Alaska — nonstop, 2h00m (2026-08-17 10:01 → 2026-08-17 12:01)
+> Delta — nonstop, 2h05m (2026-08-17 08:43 → 2026-08-17 10:48)
 
 - Google rates this price **high** for these dates
 - at/above the top of Google's usual range ($70–$195)
-- above our tracked median of $109
-- History (43 checks): low $74 · median $109 · high $302 · today ≈ 100th percentile
+- above our tracked median of $115.0
+- History (44 checks): low $74 · median $115.0 · high $302 · today ≈ 100th percentile
 
 ## SEA → SFO
-**Cheapest: $186 USD/person** ($372 for 2)  ·  🔴 PRICEY — likely worth waiting
-> Frontier — 1 stop, 28h21m (2026-08-17 12:19 → 2026-08-18 16:40)
+**Cheapest: $359 USD/person** ($718 for 2)  ·  🔴 PRICEY — likely worth waiting
+> United — nonstop, 2h20m (2026-08-17 10:55 → 2026-08-17 13:15)
 
 - Google rates this price **high** for these dates
 - at/above the top of Google's usual range ($75–$180)
-- above our tracked median of $128
-- History (43 checks): low $84 · median $128 · high $205 · today ≈ 98th percentile
+- above our tracked median of $130.5
+- History (44 checks): low $84 · median $130.5 · high $205 · today ≈ 100th percentile
 
 ---
-_Checked 2026-08-16 14:11 UTC. Deal calls blend Google's price insights with this tool's own history._
+_Checked 2026-08-17 14:15 UTC. Deal calls blend Google's price insights with this tool's own history._
