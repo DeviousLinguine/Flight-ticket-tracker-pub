@@ -1278,5 +1278,25 @@
     "travelers": 2,
     "lowest_price": null,
     "error": "SerpApi error for SFO: Google Flights hasn't returned any results for this query."
+  },
+  {
+    "checked_at": "2026-08-19T14:21:03+00:00",
+    "origin": "SEA",
+    "destination": "SMF",
+    "outbound_date": "2026-08-17",
+    "currency": "USD",
+    "travelers": 2,
+    "lowest_price": null,
+    "error": "HTTP Error 400: Bad Request"
+  },
+  {
+    "checked_at": "2026-08-19T14:21:03+00:00",
+    "origin": "SEA",
+    "destination": "SFO",
+    "outbound_date": "2026-08-17",
+    "currency": "USD",
+    "travelers": 2,
+    "lowest_price": null,
+    "error": "HTTP Error 400: Bad Request"
   }
 ]
