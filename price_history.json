@@ -1318,5 +1318,25 @@
     "travelers": 2,
     "lowest_price": null,
     "error": "HTTP Error 400: Bad Request"
+  },
+  {
+    "checked_at": "2026-08-21T14:22:01+00:00",
+    "origin": "SEA",
+    "destination": "SMF",
+    "outbound_date": "2026-08-17",
+    "currency": "USD",
+    "travelers": 2,
+    "lowest_price": null,
+    "error": "HTTP Error 400: Bad Request"
+  },
+  {
+    "checked_at": "2026-08-21T14:22:01+00:00",
+    "origin": "SEA",
+    "destination": "SFO",
+    "outbound_date": "2026-08-17",
+    "currency": "USD",
+    "travelers": 2,
+    "lowest_price": null,
+    "error": "HTTP Error 400: Bad Request"
   }
 ]
