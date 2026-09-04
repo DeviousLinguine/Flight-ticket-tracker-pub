@@ -1,4 +1,4 @@
-# ✈️ Flight price update — Thu Sep 03, 2026
+# ✈️ Flight price update — Fri Sep 04, 2026
 
 **SEA → SMF / SFO** · one-way · 2026-08-17 · 2 traveler(s) · prices in USD
 
@@ -11,4 +11,4 @@ _Prices are **per person**, one direction — the fare an airline or Google Flig
 ⚠️ Could not fetch this route: `HTTP Error 400: Bad Request`
 
 ---
-_Checked 2026-09-03 17:20 UTC. Deal calls blend Google's price insights with this tool's own history._
+_Checked 2026-09-04 17:12 UTC. Deal calls blend Google's price insights with this tool's own history._
